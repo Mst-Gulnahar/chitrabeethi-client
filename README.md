@@ -6,7 +6,7 @@
 
 ## 🌐 Live Project
 
-🔗 **Live URL:** https://chitrabeethi-client.vercel.app
+🔗 **Live URL:** https://chitrabeethi-client-ten.vercel.app
 
 ---
 
