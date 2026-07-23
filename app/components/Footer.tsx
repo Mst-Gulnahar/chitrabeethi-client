@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowUp, Sparkles, Heart, Palette, Mail, User, LayoutDashboard, Compass } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
@@ -55,7 +55,7 @@ export default function Footer() {
     },
   };
 
-  const letterVariants = {
+  const letterVariants: Variants = {
     initial: { y: 0 },
     animate: {
       y: [0, -5, 0],
@@ -65,7 +65,7 @@ export default function Footer() {
         ease: "easeInOut",
       },
     },
-  } as const;
+  };
 
   // Wave morphing paths for animated liquid top edge
   const wavePath1 = "M0,64 C280,120 420,10 700,64 C980,118 1120,20 1200,64 L1200,120 L0,120 Z";
