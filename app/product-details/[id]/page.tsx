@@ -6,10 +6,8 @@ import {
   Heart, 
   ShoppingBag, 
   ArrowLeft, 
-  Sparkles, 
   ShieldCheck, 
   Paintbrush, 
-  Calendar, 
   Tag, 
   MessageSquare, 
   Send, 
@@ -19,7 +17,6 @@ import {
   Check,
   Loader2,
   Layers,
-  Activity,
   Zap
 } from "lucide-react";
 import Link from "next/link";
@@ -154,7 +151,6 @@ export default function ArtworkDetails() {
     try {
       setPaymentLoading(true);
 
-      // Dynamically target the exact context path: product-details/[id]
       const currentOrigin = window.location.origin;
       const successUrl = `${currentOrigin}/product-details/${id}?session_id={CHECKOUT_SESSION_ID}`;
       const cancelUrl = `${currentOrigin}/product-details/${id}`;
@@ -167,8 +163,8 @@ export default function ArtworkDetails() {
         body: JSON.stringify({
           artworkId: artwork?._id,
           userId: user.id,
-          successUrl, // ✨ Handed off to backend configuration rules
-          cancelUrl   // ✨ Handed off to backend configuration rules
+          successUrl,
+          cancelUrl
         }),
       });
 
@@ -389,15 +385,15 @@ export default function ArtworkDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] pt-36 px-6 max-w-6xl mx-auto animate-pulse">
-        <div className="w-32 h-8 bg-[#3D2B1F]/10 rounded-full mb-8" />
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-7 bg-[#3D2B1F]/5 rounded-[2.5rem] aspect-[4/5]" />
-          <div className="lg:col-span-5 space-y-6">
+      <div className="min-h-screen bg-[#FDFBF7] pt-36 sm:pt-48 md:pt-56 px-4 sm:px-6 max-w-6xl mx-auto animate-pulse">
+        <div className="w-28 sm:w-32 h-8 bg-[#3D2B1F]/10 rounded-full mb-6 sm:mb-8" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-12">
+          <div className="lg:col-span-7 bg-[#3D2B1F]/5 rounded-[2rem] sm:rounded-[2.5rem] aspect-[4/5] w-full" />
+          <div className="lg:col-span-5 space-y-4 sm:space-y-6">
             <div className="h-4 w-1/3 bg-[#3D2B1F]/10 rounded-full" />
-            <div className="h-12 w-3/4 bg-[#3D2B1F]/10 rounded-xl" />
-            <div className="h-20 w-full bg-[#3D2B1F]/10 rounded-2xl" />
-            <div className="h-14 w-1/2 bg-[#3D2B1F]/10 rounded-full" />
+            <div className="h-8 sm:h-12 w-3/4 bg-[#3D2B1F]/10 rounded-xl" />
+            <div className="h-16 sm:h-20 w-full bg-[#3D2B1F]/10 rounded-2xl" />
+            <div className="h-12 sm:h-14 w-1/2 bg-[#3D2B1F]/10 rounded-full" />
           </div>
         </div>
       </div>
@@ -406,14 +402,14 @@ export default function ArtworkDetails() {
 
   if (!artwork) {
     return (
-      <main className="min-h-screen bg-[#FDFBF7] text-[#3D2B1F] flex flex-col items-center justify-center p-6 text-center">
-        <div className="p-8 rounded-[2.5rem] bg-[#3D2B1F]/5 max-w-md shadow-inner border border-[#3D2B1F]/5">
-          <span className="text-4xl">🔍</span>
-          <h1 className="text-2xl font-black uppercase tracking-tight mt-4">Artwork Not Found</h1>
-          <p className="text-sm opacity-70 mt-2 leading-relaxed">
+      <main className="min-h-screen bg-[#FDFBF7] text-[#3D2B1F] flex flex-col items-center justify-start pt-36 sm:pt-48 md:pt-56 px-4 sm:px-6 text-center">
+        <div className="p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] bg-[#3D2B1F]/5 max-w-md w-full shadow-inner border border-[#3D2B1F]/5">
+          <span className="text-3xl sm:text-4xl">🔍</span>
+          <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight mt-4">Artwork Not Found</h1>
+          <p className="text-xs sm:text-sm opacity-70 mt-2 leading-relaxed">
             The masterpiece has dissolved into thin air, or the collection identifier query link string is broken.
           </p>
-          <Link href="/browse" className="mt-6 inline-block font-black uppercase tracking-wider text-[10px] bg-[#3D2B1F] text-[#FDFBF7] px-6 py-3 rounded-full hover:bg-[#8A9A5B] transition-colors">
+          <Link href="/browse" className="mt-6 inline-block font-black uppercase tracking-wider text-[9px] sm:text-[10px] bg-[#3D2B1F] text-[#FDFBF7] px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-[#8A9A5B] transition-colors">
             Return to Gallery
           </Link>
         </div>
@@ -422,7 +418,8 @@ export default function ArtworkDetails() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FDFBF7] text-[#3D2B1F] pt-36 pb-20 px-6 overflow-hidden">
+    <main className="min-h-screen bg-[#FDFBF7] text-[#3D2B1F] pt-36 sm:pt-48 md:pt-56 pb-12 sm:pb-20 px-4 sm:px-6 overflow-hidden">
+      {/* Toast Notification */}
       <AnimatePresence>
         {toastMessage && (
           <motion.div
@@ -430,21 +427,22 @@ export default function ArtworkDetails() {
             animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
             exit={{ opacity: 0, y: -20, scale: 0.9, x: "-50%" }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed top-28 left-1/2 z-50 flex items-center gap-2.5 px-5 py-3 rounded-full shadow-xl border backdrop-blur-md font-sans text-xs font-black uppercase tracking-wider text-[#3D2B1F]"
+            className="fixed top-24 sm:top-32 left-1/2 z-50 flex items-center gap-2 sm:gap-2.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full shadow-xl border backdrop-blur-md font-sans text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#3D2B1F] max-w-[90vw] sm:max-w-none text-center"
             style={{
               backgroundColor: toastType === "success" ? "rgba(138, 154, 91, 0.15)" : toastType === "info" ? "rgba(226, 180, 189, 0.25)" : "rgba(185, 28, 28, 0.15)",
               borderColor: toastType === "success" ? "#8A9A5B" : toastType === "info" ? "#E2B4BD" : "#B91C1C",
             }}
           >
-            <Heart size={14} className={toastType === "success" ? "text-[#8A9A5B]" : toastType === "info" ? "text-[#E2B4BD]" : "text-red-700"} fill={toastType === "success" ? "currentColor" : "none"} />
-            <span>{toastMessage}</span>
+            <Heart size={14} className={`shrink-0 ${toastType === "success" ? "text-[#8A9A5B]" : toastType === "info" ? "text-[#E2B4BD]" : "text-red-700"}`} fill={toastType === "success" ? "currentColor" : "none"} />
+            <span className="truncate">{toastMessage}</span>
           </motion.div>
         )}
       </AnimatePresence>
 
+      {/* Edit Comment Modal */}
       <AnimatePresence>
         {isEditModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -458,14 +456,14 @@ export default function ArtworkDetails() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.4 }}
-              className="relative w-full max-w-md bg-[#FDFBF7] border-2 border-[#3D2B1F]/10 rounded-[2.5rem] p-6 shadow-2xl z-10 overflow-hidden"
+              className="relative w-full max-w-md bg-[#FDFBF7] border-2 border-[#3D2B1F]/10 rounded-[1.8rem] sm:rounded-[2.5rem] p-5 sm:p-6 shadow-2xl z-10 overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-32 h-32 bg-[#8A9A5B]/10 rounded-full blur-2xl pointer-events-none" />
               
               <div className="flex justify-between items-center mb-4 relative">
                 <div className="flex items-center gap-2">
                   <Edit size={14} className="text-[#8A9A5B]" />
-                  <h3 className="text-xs font-black uppercase tracking-[0.2em]">Revise Canvas Thought</h3>
+                  <h3 className="text-[11px] sm:text-xs font-black uppercase tracking-[0.2em]">Revise Canvas Thought</h3>
                 </div>
                 <button 
                   type="button"
@@ -487,23 +485,23 @@ export default function ArtworkDetails() {
                     onChange={(e) => setEditText(e.target.value)}
                     placeholder="Refine your collector review details..."
                     required
-                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-4 text-xs font-medium text-[#3D2B1F] outline-none resize-none transition-colors"
+                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 sm:p-4 text-xs font-medium text-[#3D2B1F] outline-none resize-none transition-colors"
                     autoFocus
                   />
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-2.5 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => setIsEditModalOpen(false)}
-                    className="flex-1 bg-[#3D2B1F]/5 text-[#3D2B1F] font-black text-[10px] uppercase tracking-widest py-3 rounded-full hover:bg-[#3D2B1F]/10 transition-colors"
+                    className="flex-1 bg-[#3D2B1F]/5 text-[#3D2B1F] font-black text-[9px] sm:text-[10px] uppercase tracking-widest py-3 rounded-full hover:bg-[#3D2B1F]/10 transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSavingEdit || !editText.trim()}
-                    className="flex-1 bg-[#3D2B1F] text-[#FDFBF7] font-black text-[10px] uppercase tracking-widest py-3 rounded-full hover:bg-[#8A9A5B] transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
+                    className="flex-1 bg-[#3D2B1F] text-[#FDFBF7] font-black text-[9px] sm:text-[10px] uppercase tracking-widest py-3 rounded-full hover:bg-[#8A9A5B] transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
                   >
                     {isSavingEdit ? "Saving..." : (
                       <>
@@ -518,9 +516,10 @@ export default function ArtworkDetails() {
         )}
       </AnimatePresence>
 
+      {/* Edit Artwork Modal */}
       <AnimatePresence>
         {isArtEditModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -534,14 +533,14 @@ export default function ArtworkDetails() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.4 }}
-              className="relative w-full max-w-md bg-[#FDFBF7] border-2 border-[#3D2B1F]/10 rounded-[2.5rem] p-6 shadow-2xl z-10 overflow-hidden text-[#3D2B1F]"
+              className="relative w-full max-w-md bg-[#FDFBF7] border-2 border-[#3D2B1F]/10 rounded-[1.8rem] sm:rounded-[2.5rem] p-4 sm:p-6 shadow-2xl z-10 overflow-hidden text-[#3D2B1F] max-h-[90vh] overflow-y-auto custom-scrollbar my-auto"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#E2B4BD]/10 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex justify-between items-center mb-4 relative">
                 <div className="flex items-center gap-2">
                   <Paintbrush size={14} className="text-[#8A9A5B]" />
-                  <h3 className="text-xs font-black uppercase tracking-[0.2em]">Update Masterpiece Configuration</h3>
+                  <h3 className="text-[11px] sm:text-xs font-black uppercase tracking-[0.15em] sm:tracking-[0.2em]">Update Masterpiece Configuration</h3>
                 </div>
                 <button 
                   type="button"
@@ -552,7 +551,7 @@ export default function ArtworkDetails() {
                 </button>
               </div>
 
-              <form onSubmit={handleSaveArtworkEdit} className="space-y-4 relative">
+              <form onSubmit={handleSaveArtworkEdit} className="space-y-3 sm:space-y-4 relative">
                 <div className="space-y-1">
                   <label className="text-[9px] font-black uppercase tracking-widest text-[#3D2B1F]/60 pl-1">Artwork Title (Name)</label>
                   <input
@@ -560,11 +559,11 @@ export default function ArtworkDetails() {
                     value={artFormData.name}
                     onChange={(e) => setArtFormData({...artFormData, name: e.target.value})}
                     required
-                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 text-xs font-medium text-[#3D2B1F] outline-none transition-colors"
+                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3 text-xs font-medium text-[#3D2B1F] outline-none transition-colors"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <label className="text-[9px] font-black uppercase tracking-widest text-[#3D2B1F]/60 pl-1">Price (৳ BDT)</label>
                     <input
@@ -573,7 +572,7 @@ export default function ArtworkDetails() {
                       onChange={(e) => setArtFormData({...artFormData, price: Number(e.target.value)})}
                       required
                       min="0"
-                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 text-xs font-mono text-[#3D2B1F] outline-none transition-colors"
+                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3 text-xs font-mono text-[#3D2B1F] outline-none transition-colors"
                     />
                   </div>
                   
@@ -582,7 +581,7 @@ export default function ArtworkDetails() {
                     <select
                       value={artFormData.category}
                       onChange={(e) => setArtFormData({...artFormData, category: e.target.value})}
-                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 text-xs font-medium text-[#3D2B1F] outline-none transition-colors appearance-none"
+                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3 text-xs font-medium text-[#3D2B1F] outline-none transition-colors appearance-none"
                     >
                       {["Canvas", "Paper", "Painting", "Acrylic Art", "Sculpture", "Photography"].map((cat) => (
                         <option key={cat} value={cat}>{cat}</option>
@@ -591,7 +590,7 @@ export default function ArtworkDetails() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="space-y-1">
                     <label className="text-[9px] font-black uppercase tracking-widest text-[#3D2B1F]/60 pl-1">Classification Sub-Tag</label>
                     <input
@@ -600,7 +599,7 @@ export default function ArtworkDetails() {
                       placeholder="e.g. Original Acrylic"
                       onChange={(e) => setArtFormData({...artFormData, tag: e.target.value})}
                       required
-                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 text-xs font-medium text-[#3D2B1F] outline-none transition-colors"
+                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3 text-xs font-medium text-[#3D2B1F] outline-none transition-colors"
                   />
                   </div>
 
@@ -609,7 +608,7 @@ export default function ArtworkDetails() {
                     <select
                       value={artFormData.status}
                       onChange={(e) => setArtFormData({...artFormData, status: e.target.value})}
-                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 text-xs font-medium text-[#3D2B1F] outline-none transition-colors appearance-none"
+                      className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3 text-xs font-medium text-[#3D2B1F] outline-none transition-colors appearance-none"
                     >
                       <option value="available">Available</option>
                       <option value="sold">Sold</option>
@@ -624,7 +623,7 @@ export default function ArtworkDetails() {
                     value={artFormData.img}
                     onChange={(e) => setArtFormData({...artFormData, img: e.target.value})}
                     required
-                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 text-xs font-mono text-[#3D2B1F] outline-none transition-colors"
+                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3 text-xs font-mono text-[#3D2B1F] outline-none transition-colors"
                   />
                 </div>
 
@@ -635,22 +634,22 @@ export default function ArtworkDetails() {
                     value={artFormData.description}
                     onChange={(e) => setArtFormData({...artFormData, description: e.target.value})}
                     required
-                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-4 text-xs font-medium text-[#3D2B1F] outline-none resize-none transition-colors"
+                    className="w-full bg-[#3D2B1F]/5 border-2 border-transparent focus:border-[#8A9A5B] rounded-2xl p-3.5 text-xs font-medium text-[#3D2B1F] outline-none resize-none transition-colors"
                   />
                 </div>
 
-                <div className="flex gap-3 pt-2">
+                <div className="flex gap-2.5 sm:gap-3 pt-2">
                   <button
                     type="button"
                     onClick={() => setIsArtEditModalOpen(false)}
-                    className="flex-1 bg-[#3D2B1F]/5 text-[#3D2B1F] font-black text-[10px] uppercase tracking-widest py-3.5 rounded-full hover:bg-[#3D2B1F]/10 transition-colors"
+                    className="flex-1 bg-[#3D2B1F]/5 text-[#3D2B1F] font-black text-[9px] sm:text-[10px] uppercase tracking-widest py-3 sm:py-3.5 rounded-full hover:bg-[#3D2B1F]/10 transition-colors"
                   >
                     Discard
                   </button>
                   <button
                     type="submit"
                     disabled={isSavingArtwork}
-                    className="flex-1 bg-[#3D2B1F] text-[#FDFBF7] font-black text-[10px] uppercase tracking-widest py-3.5 rounded-full hover:bg-[#8A9A5B] transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
+                    className="flex-1 bg-[#3D2B1F] text-[#FDFBF7] font-black text-[9px] sm:text-[10px] uppercase tracking-widest py-3 sm:py-3.5 rounded-full hover:bg-[#8A9A5B] transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
                   >
                     {isSavingArtwork ? (
                       <>Saving <Loader2 className="animate-spin" size={12} /></>
@@ -666,15 +665,16 @@ export default function ArtworkDetails() {
       </AnimatePresence>
 
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-          <Link href="/browse" className="inline-flex items-center gap-2 group font-black uppercase tracking-[0.2em] text-[10px] bg-[#3D2B1F]/5 hover:bg-[#3D2B1F]/10 px-4 py-2 rounded-full transition-all duration-300">
+        {/* Navigation & Controls Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8">
+          <Link href="/browse" className="inline-flex items-center gap-2 group font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[9px] sm:text-[10px] bg-[#3D2B1F]/5 hover:bg-[#3D2B1F]/10 px-3.5 sm:px-4 py-2 rounded-full transition-all duration-300">
             <ArrowLeft size={14} className="transform group-hover:-translate-x-1 transition-transform" />
             Back to Gallery
           </Link>
 
           {isArtistOwner && (
-            <div className="flex items-center gap-2 bg-[#8A9A5B]/10 p-1.5 rounded-full border border-[#8A9A5B]/20">
-              <span className="text-[9px] font-black uppercase tracking-wider text-[#8A9A5B] pl-3 pr-2">Your Studio Item:</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-[#8A9A5B]/10 p-1 sm:p-1.5 rounded-full border border-[#8A9A5B]/20">
+              <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-[#8A9A5B] pl-2.5 sm:pl-3 pr-1 sm:pr-2">Your Studio Item:</span>
               <button 
                 type="button"
                 onClick={() => {
@@ -689,36 +689,39 @@ export default function ArtworkDetails() {
                   });
                   setIsArtEditModalOpen(true);
                 }}
-                className="p-2 rounded-full bg-[#FDFBF7] text-[#3D2B1F] hover:bg-[#E2B4BD] shadow-sm transition-colors" 
+                className="p-1.5 sm:p-2 rounded-full bg-[#FDFBF7] text-[#3D2B1F] hover:bg-[#E2B4BD] shadow-sm transition-colors" 
                 title="Edit Masterpiece Details"
               >
-                <Edit size={14} />
+                <Edit size={13} className="sm:w-3.5 sm:h-3.5" />
               </button>
               <button 
                 type="button"
                 disabled={isDeletingArtwork}
                 onClick={handleDeleteArtwork}
-                className="p-2 rounded-full bg-[#3D2B1F] text-[#FDFBF7] hover:bg-red-700 shadow-sm transition-colors disabled:opacity-50" 
+                className="p-1.5 sm:p-2 rounded-full bg-[#3D2B1F] text-[#FDFBF7] hover:bg-red-700 shadow-sm transition-colors disabled:opacity-50" 
                 title="Burn Listing from Repository"
               >
-                {isDeletingArtwork ? <Loader2 className="animate-spin" size={14} /> : <Trash2 size={14} />}
+                {isDeletingArtwork ? <Loader2 className="animate-spin" size={13} /> : <Trash2 size={13} className="sm:w-3.5 sm:h-3.5" />}
               </button>
             </div>
           )}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7 flex justify-center relative sticky top-36">
-            <div className="absolute -top-12 -left-12 w-72 h-72 bg-[#E2B4BD]/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          
+          {/* Left Column: Artwork Showcase Frame */}
+          <div className="lg:col-span-7 flex justify-center relative lg:sticky lg:top-48">
+            <div className="absolute -top-8 -left-8 sm:-top-12 sm:-left-12 w-48 sm:w-72 h-48 sm:h-72 bg-[#E2B4BD]/20 rounded-full blur-3xl pointer-events-none" />
             
             <motion.div 
-              className="relative rounded-[2.5rem] p-4 bg-[#3D2B1F]/5 border border-[#3D2B1F]/5 shadow-xl cursor-zoom-in overflow-hidden w-full max-w-lg aspect-[4/5] flex items-center justify-center"
+              className="relative rounded-[2rem] sm:rounded-[2.5rem] p-3 sm:p-4 bg-[#3D2B1F]/5 border border-[#3D2B1F]/5 shadow-xl cursor-zoom-in overflow-hidden w-full max-w-md lg:max-w-lg aspect-[4/5] flex items-center justify-center"
               whileHover={{ scale: 1.01 }}
               onClick={() => setIsZoomed(!isZoomed)}
               layout
             >
               <motion.div 
-                className="w-full h-full rounded-[1.8rem] overflow-hidden relative bg-[#F4EFE6]"
+                className="w-full h-full rounded-[1.4rem] sm:rounded-[1.8rem] overflow-hidden relative bg-[#F4EFE6]"
                 animate={{ scale: isZoomed ? 1.2 : 1 }}
                 transition={{ type: "spring", stiffness: 100, damping: 25 }}
               >
@@ -727,13 +730,13 @@ export default function ArtworkDetails() {
                 {artwork.img ? (
                   <img src={artwork.img} alt={artwork.name} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center font-bold text-sm text-[#3D2B1F]/40 italic">
+                  <div className="w-full h-full flex items-center justify-center font-bold text-xs sm:text-sm text-[#3D2B1F]/40 italic p-4 text-center">
                     [ No Exhibition Asset Rendered ]
                   </div>
                 )}
               </motion.div>
 
-              <span className={`absolute top-8 left-8 px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-md ${
+              <span className={`absolute top-5 left-5 sm:top-8 sm:left-8 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest shadow-md ${
                 artwork.status === "available" ? "bg-[#8A9A5B] text-[#FDFBF7]" : "bg-red-800 text-[#FDFBF7]"
               }`}>
                 {artwork.status}
@@ -741,19 +744,20 @@ export default function ArtworkDetails() {
             </motion.div>
           </div>
 
-          <div className="lg:col-span-5 flex flex-col gap-6">
+          {/* Right Column: Information & Actions */}
+          <div className="lg:col-span-5 flex flex-col gap-5 sm:gap-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#8A9A5B] bg-[#8A9A5B]/10 px-3 py-1 rounded-full flex items-center gap-1">
+                <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#8A9A5B] bg-[#8A9A5B]/10 px-3 py-1 rounded-full flex items-center gap-1">
                   <Paintbrush size={10} /> Certified Original
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-black font-sans uppercase tracking-tight text-[#3D2B1F]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-sans uppercase tracking-tight text-[#3D2B1F] leading-tight">
                 {artwork.name}
               </h1>
               
-              <p className="text-xs font-bold tracking-wider opacity-60 mt-2 uppercase">
+              <p className="text-[10px] sm:text-xs font-bold tracking-wider opacity-60 mt-2 uppercase">
                 Artist Desk:{" "}
                 <Link 
                   href={getArtistId() ? `/profile/artist/${getArtistId()}/` : "/browse"} 
@@ -764,40 +768,41 @@ export default function ArtworkDetails() {
               </p>
             </div>
 
-            <div className="inline-flex items-baseline gap-3 bg-[#3D2B1F] text-[#FDFBF7] p-5 rounded-[2rem] shadow-lg w-fit pr-10">
-              <span className="text-3xl font-black tracking-tight font-sans">
+            <div className="inline-flex items-baseline gap-2.5 sm:gap-3 bg-[#3D2B1F] text-[#FDFBF7] p-4 sm:p-5 rounded-[1.5rem] sm:rounded-[2rem] shadow-lg w-fit pr-8 sm:pr-10">
+              <span className="text-2xl sm:text-3xl font-black tracking-tight font-sans">
                 ৳{artwork.price?.toLocaleString("bn-BD")}
               </span>
-              <span className="text-[10px] font-black tracking-widest text-[#E2B4BD] uppercase">BDT / Fixed Rate</span>
+              <span className="text-[9px] sm:text-[10px] font-black tracking-widest text-[#E2B4BD] uppercase">BDT / Fixed Rate</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 bg-[#3D2B1F]/5 p-4 rounded-[2rem] border border-[#3D2B1F]/5">
-              <div className="bg-[#FDFBF7] p-3 rounded-[1.2rem] text-center shadow-sm flex flex-col items-center justify-center">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 bg-[#3D2B1F]/5 p-3 sm:p-4 rounded-[1.5rem] sm:rounded-[2rem] border border-[#3D2B1F]/5">
+              <div className="bg-[#FDFBF7] p-2.5 sm:p-3 rounded-[1rem] sm:rounded-[1.2rem] text-center shadow-sm flex flex-col items-center justify-center">
                 <Layers size={12} className="text-[#8A9A5B] mb-1" />
-                <p className="text-[8px] font-black uppercase tracking-wider text-[#3D2B1F]/50">Category</p>
-                <p className="text-xs font-bold mt-0.5">{artwork.category || "General Painting"}</p>
+                <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-wider text-[#3D2B1F]/50">Category</p>
+                <p className="text-xs font-bold mt-0.5 truncate max-w-full px-1">{artwork.category || "General Painting"}</p>
               </div>
-              <div className="bg-[#FDFBF7] p-3 rounded-[1.2rem] text-center shadow-sm flex flex-col items-center justify-center">
+              <div className="bg-[#FDFBF7] p-2.5 sm:p-3 rounded-[1rem] sm:rounded-[1.2rem] text-center shadow-sm flex flex-col items-center justify-center">
                 <Tag size={12} className="text-[#E2B4BD] mb-1" />
-                <p className="text-[8px] font-black uppercase tracking-wider text-[#3D2B1F]/50">Sub-Classification</p>
-                <p className="text-xs font-bold mt-0.5">{artwork.tag || "Fine Art Layout"}</p>
+                <p className="text-[7px] sm:text-[8px] font-black uppercase tracking-wider text-[#3D2B1F]/50">Sub-Classification</p>
+                <p className="text-xs font-bold mt-0.5 truncate max-w-full px-1">{artwork.tag || "Fine Art Layout"}</p>
               </div>
             </div>
 
-            <p className="text-sm font-medium leading-relaxed text-[#3D2B1F]/80 pl-4 border-l-2 border-[#E2B4BD]">
+            <p className="text-xs sm:text-sm font-medium leading-relaxed text-[#3D2B1F]/80 pl-3.5 sm:pl-4 border-l-2 border-[#E2B4BD]">
               "{artwork.description}"
             </p>
 
-            <div className="flex flex-col gap-2 mt-2">
-              <div className="flex gap-4">
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-2 mt-1 sm:mt-2">
+              <div className="flex gap-2.5 sm:gap-4">
                 {isTierRestricted && artwork.status !== "sold" && !isArtistOwner ? (
                   <motion.button 
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => router.push("/dashboard/user")}
-                    className="flex-1 bg-[#E2B4BD] text-[#3D2B1F] border-[3px] border-[#3D2B1F] font-black uppercase tracking-[0.15em] text-xs py-4 px-6 rounded-full flex items-center justify-center gap-2 shadow-[4px_4px_0px_#3D2B1F] hover:shadow-none transition-all duration-300"
+                    className="flex-1 bg-[#E2B4BD] text-[#3D2B1F] border-[2.5px] sm:border-[3px] border-[#3D2B1F] font-black uppercase tracking-[0.1em] sm:tracking-[0.15em] text-[11px] sm:text-xs py-3.5 sm:py-4 px-4 sm:px-6 rounded-full flex items-center justify-center gap-1.5 sm:gap-2 shadow-[3px_3px_0px_#3D2B1F] sm:shadow-[4px_4px_0px_#3D2B1F] hover:shadow-none transition-all duration-300"
                   >
-                    <Zap size={14} /> Upgrade to Unlock Vault Space
+                    <Zap size={14} className="shrink-0" /> Unlock Vault Space
                   </motion.button>
                 ) : (
                   <motion.button 
@@ -805,13 +810,13 @@ export default function ArtworkDetails() {
                     whileTap={!isPurchaseDisabled ? { scale: 0.98 } : {}}
                     onClick={handlePurchase}
                     disabled={isPurchaseDisabled}
-                    className={`flex-1 font-black uppercase tracking-[0.2em] text-xs py-4 px-6 rounded-full flex items-center justify-center gap-3 transition-all duration-300 shadow-lg ${
+                    className={`flex-1 font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-xs py-3.5 sm:py-4 px-4 sm:px-6 rounded-full flex items-center justify-center gap-2 sm:gap-3 transition-all duration-300 shadow-lg ${
                       isPurchaseDisabled
                         ? "bg-[#3D2B1F]/10 text-[#3D2B1F]/30 cursor-not-allowed shadow-none line-through"
                         : "bg-[#8A9A5B] text-[#FDFBF7] hover:bg-[#3D2B1F] border-2 border-transparent focus:border-[#3D2B1F]"
                     }`}
                   >
-                    <span>
+                    <span className="truncate">
                       {artwork.status === "sold" 
                         ? "Artwork Sold Out" 
                         : isArtistOwner 
@@ -822,7 +827,7 @@ export default function ArtworkDetails() {
                               ? "Buy Now" 
                               : "Log In to Acquire"}
                     </span>
-                    <ShoppingBag size={16} strokeWidth={2.5} />
+                    <ShoppingBag size={16} strokeWidth={2.5} className="shrink-0" />
                   </motion.button>
                 )}
 
@@ -830,57 +835,58 @@ export default function ArtworkDetails() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onWishlistClick}
-                  className={`p-4 rounded-full border-2 transition-all duration-300 flex items-center justify-center ${
+                  className={`p-3.5 sm:p-4 rounded-full border-2 transition-all duration-300 flex items-center justify-center shrink-0 ${
                     isWishlisted 
                       ? "bg-[#E2B4BD]/20 border-[#E2B4BD] text-[#E2B4BD]" 
                       : "border-[#3D2B1F]/20 text-[#3D2B1F] hover:border-[#E2B4BD] hover:text-[#E2B4BD]"
                   }`}
                 >
-                  <Heart size={20} fill={isWishlisted ? "currentColor" : "none"} strokeWidth={2.5} />
+                  <Heart size={18} className="sm:w-5 sm:h-5" fill={isWishlisted ? "currentColor" : "none"} strokeWidth={2.5} />
                 </motion.button>
               </div>
 
               {isTierRestricted && artwork.status !== "sold" && !isArtistOwner && (
-                <p className="text-[10px] text-center font-bold text-red-700 uppercase tracking-wider mt-1">
+                <p className="text-[9px] sm:text-[10px] text-center font-bold text-red-700 uppercase tracking-wider mt-1 px-2">
                   ⚠️ Limit Reached: You own {purchaseCount} items on the {activeTier} tier (Max: {activeTier === "free" ? 3 : 9}). Upgrade to acquire more art.
                 </p>
               )}
 
               {isArtistOwner && (
-                <p className="text-[10px] text-center font-bold text-red-700/70 tracking-wide mt-1">
+                <p className="text-[9px] sm:text-[10px] text-center font-bold text-red-700/70 tracking-wide mt-1 px-2">
                   ⚠️ System Rule Protection: Listing creators cannot purchase items from their own portfolio.
                 </p>
               )}
             </div>
 
-            <hr className="border-[#3D2B1F]/10 my-4" />
+            <hr className="border-[#3D2B1F]/10 my-2 sm:my-4" />
             
-            <div className="space-y-4">
-              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[#3D2B1F] flex items-center gap-2">
+            {/* Gallery Dialogue / Reviews */}
+            <div className="space-y-3 sm:space-y-4">
+              <h3 className="text-[11px] sm:text-xs font-black uppercase tracking-[0.2em] text-[#3D2B1F] flex items-center gap-2">
                 <MessageSquare size={14} /> Gallery Dialogue ({comments.length})
               </h3>
 
               {!user ? (
-                <div className="text-center p-4 rounded-2xl bg-[#3D2B1F]/5 border border-dashed border-[#3D2B1F]/10">
-                  <p className="text-[10px] font-bold opacity-60 uppercase tracking-wider">
+                <div className="text-center p-3.5 sm:p-4 rounded-2xl bg-[#3D2B1F]/5 border border-dashed border-[#3D2B1F]/10">
+                  <p className="text-[9px] sm:text-[10px] font-bold opacity-60 uppercase tracking-wider">
                     Log in to drop thread insights.
                   </p>
-                  <Link href="/login" className="inline-block text-[9px] font-black uppercase text-[#8A9A5B] hover:underline mt-1">
+                  <Link href="/login" className="inline-block text-[8px] sm:text-[9px] font-black uppercase text-[#8A9A5B] hover:underline mt-1">
                     Sign In to Account →
                   </Link>
                 </div>
               ) : (!hasPurchased && !isArtistOwner) ? (
-                <div className="text-center p-4 rounded-2xl bg-[#3D2B1F]/5 border border-[#3D2B1F]/10 flex flex-col items-center justify-center gap-1">
-                  <div className="flex items-center gap-1 text-[#8A9A5B] font-black uppercase tracking-wider text-[9px]">
+                <div className="text-center p-3.5 sm:p-4 rounded-2xl bg-[#3D2B1F]/5 border border-[#3D2B1F]/10 flex flex-col items-center justify-center gap-1">
+                  <div className="flex items-center gap-1 text-[#8A9A5B] font-black uppercase tracking-wider text-[8px] sm:text-[9px]">
                     <ShieldCheck size={12} /> Exclusive Collector Circle
                   </div>
-                  <p className="text-[10px] font-medium opacity-60 max-w-sm mt-0.5">
+                  <p className="text-[9px] sm:text-[10px] font-medium opacity-60 max-w-sm mt-0.5">
                     Only verified collectors who acquired this canvas listing can leave insight review marks.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handlePostComment} className="flex gap-2 items-center bg-[#3D2B1F]/5 p-2 rounded-full border border-[#3D2B1F]/5">
-                  <div className="w-7 h-7 bg-[#E2B4BD] text-[#3D2B1F] font-black text-[9px] rounded-full flex items-center justify-center uppercase shadow-sm">
+                <form onSubmit={handlePostComment} className="flex gap-2 items-center bg-[#3D2B1F]/5 p-1.5 sm:p-2 rounded-full border border-[#3D2B1F]/5">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 bg-[#E2B4BD] text-[#3D2B1F] font-black text-[8px] sm:text-[9px] rounded-full flex items-center justify-center uppercase shadow-sm shrink-0">
                     {user.name ? user.name.substring(0, 2) : "ME"}
                   </div>
                   <input 
@@ -888,15 +894,15 @@ export default function ArtworkDetails() {
                     placeholder={isArtistOwner ? "Moderate studio discussion..." : "Leave a collector review on this canvas..."} 
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
-                    className="flex-1 bg-transparent px-3 py-2 text-xs font-medium focus:outline-none placeholder-[#3D2B1F]/40 text-[#3D2B1F]"
+                    className="flex-1 bg-transparent px-2 sm:px-3 py-1.5 text-xs font-medium focus:outline-none placeholder-[#3D2B1F]/40 text-[#3D2B1F] min-w-0"
                   />
-                  <button type="submit" className="p-2 rounded-full bg-[#3D2B1F] text-[#FDFBF7] hover:bg-[#8A9A5B] transition-colors">
+                  <button type="submit" className="p-2 rounded-full bg-[#3D2B1F] text-[#FDFBF7] hover:bg-[#8A9A5B] transition-colors shrink-0">
                     <Send size={12} />
                   </button>
                 </form>
               )}
 
-              <div className="space-y-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-2.5 sm:space-y-3 max-h-56 sm:max-h-60 overflow-y-auto pr-1 sm:pr-2 custom-scrollbar">
                 <AnimatePresence initial={false}>
                   {comments.map((comment) => {
                     const isCommentOwner = user && user.id === comment.userId;
@@ -907,14 +913,14 @@ export default function ArtworkDetails() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0 }}
-                        className="bg-[#3D2B1F]/5 p-3.5 rounded-[1.5rem] border border-[#3D2B1F]/5 relative group/item"
+                        className="bg-[#3D2B1F]/5 p-3 sm:p-3.5 rounded-[1.2rem] sm:rounded-[1.5rem] border border-[#3D2B1F]/5 relative group/item"
                       >
                         <div className="flex justify-between items-center mb-1">
-                          <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 bg-[#3D2B1F]/10 text-[#3D2B1F]/70 font-bold text-[8px] rounded-full flex items-center justify-center uppercase">
+                          <div className="flex items-center gap-1.5 sm:gap-2">
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 bg-[#3D2B1F]/10 text-[#3D2B1F]/70 font-bold text-[7px] sm:text-[8px] rounded-full flex items-center justify-center uppercase shrink-0">
                               {comment.userName ? comment.userName.substring(0, 2) : "CR"}
                             </div>
-                            <span className="text-[10px] font-black uppercase tracking-wider">{comment.userName}</span>
+                            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider truncate max-w-[120px] sm:max-w-none">{comment.userName}</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-[8px] opacity-40 font-bold">
@@ -922,7 +928,7 @@ export default function ArtworkDetails() {
                             </span>
 
                             {isCommentOwner && (
-                              <div className="flex items-center gap-1 opacity-0 group-hover/item:opacity-100 transition-opacity duration-200">
+                              <div className="flex items-center gap-1 opacity-100 sm:opacity-0 group-hover/item:opacity-100 transition-opacity duration-200">
                                 <button 
                                   type="button"
                                   onClick={() => handleStartEdit(comment._id, comment.comment)}
@@ -944,7 +950,7 @@ export default function ArtworkDetails() {
                           </div>
                         </div>
 
-                        <p className="text-xs font-medium opacity-80 leading-relaxed pl-7">
+                        <p className="text-[11px] sm:text-xs font-medium opacity-80 leading-relaxed pl-5 sm:pl-7">
                           {comment.comment}
                         </p>
                       </motion.div>
@@ -952,7 +958,7 @@ export default function ArtworkDetails() {
                   })}
                 </AnimatePresence>
                 {comments.length === 0 && (
-                  <p className="text-[10px] text-center italic opacity-40 uppercase tracking-widest py-4">
+                  <p className="text-[9px] sm:text-[10px] text-center italic opacity-40 uppercase tracking-widest py-3 sm:py-4">
                     The discussion thread is currently vacant.
                   </p>
                 )}

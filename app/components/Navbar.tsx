@@ -40,7 +40,9 @@ export default function Header() {
   // Structural Navigation Tree Arrays
   const leftLinks = [
     { name: "Home", href: "/" },
-    { name: "Browse Artworks", href: "/browse" }
+    { name: "Browse Artworks", href: "/browse" },
+    { name: "About Us", href: "/about" },
+    { name: "Contact", href: "/contact" }
   ];
 
   // 🌟 DYNAMIC PROFILE PATH LOGIC
